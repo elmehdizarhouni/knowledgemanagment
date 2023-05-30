@@ -14,11 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-<<<<<<< HEAD
-       /* DB::table('users')->insert([
-=======
-        DB::table('users')->insert([
->>>>>>> 550b7ed80ddcb5c66281b16eb4ce11df9864e396
+
+       
+        /*DB::table('users')->insert([
+
             'name'=>'User1',
             'email'=>'user1@email.com',
             'type'=>'Evaluateur',
@@ -34,14 +33,9 @@ class DatabaseSeeder extends Seeder
             'name'=>'User3',
             'email'=>'user3@email.com',
             'type'=>'Employé',
-            'password'=>bcrypt('password'),
-<<<<<<< HEAD
-        ]);*/
-       /* $this->call(PosteSeeder::class);
+            'password'=>bcrypt('password'),]);*/
+       $this->call(PosteSeeder::class);
         Employe::factory(10)->create();
-        Evaluateur::factory(5)->create();*/
-=======
-        ]);
->>>>>>> 550b7ed80ddcb5c66281b16eb4ce11df9864e396
-    }
-}
+        Evaluateur::factory(5)->create();
+
+    }}
