@@ -9,6 +9,12 @@ use App\Models\Poste;
 
 class EmployeController extends Controller
 {
+    protected $employes;
+
+    public function __construct()
+    {
+        $this->employes = Employe::all();
+    }
     public function index()
     {
         $employes = Employe::all();
