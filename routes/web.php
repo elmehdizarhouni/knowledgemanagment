@@ -29,4 +29,5 @@ Route::get('/formations/{formation}/edit', [FormationController::class, 'edit'])
 Route::put('/formations/{formation}', [FormationController::class, 'update'])->name('formations.update');
 Route::delete('/formations/{formation}', [FormationController::class, 'destroy'])->name('formations.destroy');
 
+Auth::routes();
 
