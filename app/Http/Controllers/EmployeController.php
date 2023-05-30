@@ -21,12 +21,12 @@ class EmployeController extends Controller
     {
         $employes = Employe::all();
 
-        return view('Employe/index', compact('employes'));
+        return view('Employe.index', compact('employes'));
     }
 
     public function create()
     {
-            return view('Employe/create', compact('postes'));
+            return view('Employe.create', compact('postes'));
     }
 
     public function store(Request $request)
@@ -52,14 +52,14 @@ class EmployeController extends Controller
         $employe->id_poste = $request->id_poste;
         $employe->save();
 
-        return redirect()->route('Employe/index')->with('success', 'employé a été créé avec succès.');
+        return redirect()->route('Employe.index')->with('success', 'employé a été créé avec succès.');
     }
 
     public function edit($id)
     {
         $employe = Employe::findOrFail($id);
 
-        return view('employes/edit', compact('employe'));
+        return view('Employe.edit', compact('employe'));
     }
 
     public function update(Request $request, $id)
@@ -84,7 +84,7 @@ class EmployeController extends Controller
         $employe->id_poste = $request->id_poste;
         $employe->save();
 
-        return redirect()->route('Employe/index')->with('success', 'employé a été mis à jour avec succès.');
+        return redirect()->route('Employe.index')->with('success', 'employé a été mis à jour avec succès.');
     }
 
     public function destroy($id)
@@ -92,7 +92,7 @@ class EmployeController extends Controller
         $employe = Employe::findOrFail($id);
         $employe->delete();
 
-        return redirect()->route('Employe/index')->with('success', 'employé a été supprimé avec succès.');
+        return redirect()->route('Employe.index')->with('success', 'employé a été supprimé avec succès.');
     }
     public function createFormation(Employe $employe)
 {

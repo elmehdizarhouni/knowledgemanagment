@@ -3,7 +3,7 @@
 @section('content')
     <h1>Liste des employés</h1>
 
-    <a href="{{ route('employes.create') }}" class="btn btn-primary">Ajouter un employé</a>
+    <a href="{{ route('Employe.create') }}" class="btn btn-primary">Ajouter un employé</a>
 
     <table class="table">
         <thead>
@@ -27,9 +27,9 @@
                     <td>{{ $employe->telephone }}</td>
                     <td>{{ $employe->date_embauche }}</td>
                     <td>
-                        <a href="{{ route('employes.show', $employe->id) }}" class="btn btn-primary">Afficher</a>
-                        <a href="{{ route('employes.edit', $employe->id) }}" class="btn btn-secondary">Modifier</a>
-                        <form action="{{ route('employes.destroy', $employe->id) }}" method="POST" style="display: inline-block">
+                        
+                        <a href="{{ route('Employe.edit', $employe->id) }}" class="btn btn-secondary">Modifier</a>
+                        <form action="{{ route('Employe.destroy', $employe->id) }}" method="POST" style="display: inline-block">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">Supprimer</button>
