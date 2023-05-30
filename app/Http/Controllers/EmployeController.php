@@ -28,6 +28,12 @@ class EmployeController extends Controller
     {$postes = Poste::all();
             return view('Employe.create', compact('postes'));
     }
+    public function show($id)
+{
+    $employe = Employe::findOrFail($id);
+    return view('Employe.show', compact('employe'));
+}
+
 
     public function store(Request $request)
     {
@@ -41,6 +47,7 @@ class EmployeController extends Controller
             'id_poste' => 'required',
 
         ]);
+        
 
         $employe = new Employe;
         $employe->nom = $request->nom;
@@ -98,7 +105,7 @@ class EmployeController extends Controller
     }
     public function createFormation(Employe $employe)
 {
-    return view('formations/create', compact('employe'));
+    return view('formations.create', compact('employe'));
 }
 
 public function storeFormation(Request $request, Employe $employe)
@@ -110,13 +117,13 @@ public function storeFormation(Request $request, Employe $employe)
     
     $employe->formations()->save($formation);
     
-    return redirect()->route('employes/show', $employe)
+    return redirect()->route('Employe.show', $employe)
                     ->with('success', 'La formation a été créée avec succès.');
 }
 
 public function editFormation(Employe $employe, Formation $formation)
 {
-    return view('formations/edit', compact('employe', 'formation'));
+    return view('formations.edit', compact('employe', 'formation'));
 }
 
 public function updateFormation(Request $request, Employe $employe, Formation $formation)
@@ -126,19 +133,20 @@ public function updateFormation(Request $request, Employe $employe, Formation $f
         'description_formation' => $request->input('description_formation'),
     ]);
     
-    // Rediriger ou afficher un message de succès
+    return redirect()->route('Employe.show', $employe->id)
+    ->with('success', 'La formation a été mise à jour avec succès.');
 }
 
 public function destroyFormation(Employe $employe, Formation $formation)
 {
     $formation->delete();
-    
-    // Rediriger ou afficher un message de succès
+    return redirect()->route('Employe.show', $employe->id)
+                    ->with('success', 'La formation a été supprimée avec succès.');
 }
 
 public function createCompetence(Employe $employe)
 {
-    return view('competences/create', compact('employe'));
+    return view('competences.create', compact('employe'));
 }
 
 public function storeCompetence(Request $request, Employe $employe)
@@ -150,12 +158,13 @@ public function storeCompetence(Request $request, Employe $employe)
     
     $employe->competences()->save($competence);
     
-    // Rediriger ou afficher un message de succès
+    return redirect()->route('Employe.show', $employe->id)
+    ->with('success', 'La compétence a été créée avec succès.');
 }
 
 public function editCompetence(Employe $employe, Competence $competence)
 {
-    return view('competences/edit', compact('employe', 'competence'));
+    return view('competences.edit', compact('employe', 'competence'));
 }
 
 public function updateCompetence(Request $request, Employe $employe, Competence $competence)
@@ -165,13 +174,15 @@ public function updateCompetence(Request $request, Employe $employe, Competence 
         'type' => $request->input('type'),
     ]);
     
-    // Rediriger ou afficher un message de succès
+    return redirect()->route('Employe.show', $employe->id)
+                    ->with('success', 'La compétence a été mise à jour avec succès.');
 }
 
 public function destroyCompetence(Employe $employe, Competence $competence)
 {
     $competence->delete();
     
-    // Rediriger ou afficher un message de succès
+    return redirect()->route('Employe.show', $employe->id)
+                    ->with('success', 'La compétence a été supprimée avec succès.');
 }
 }
