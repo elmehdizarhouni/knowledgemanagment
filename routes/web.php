@@ -34,6 +34,8 @@ Route::get('/Employe/index', [App\Http\Controllers\EmployeController::class, 'in
 Route::get('/Employe/create', [App\Http\Controllers\EmployeController::class, 'create'])->name('Employe.create');
 Route::get('/Employe/edit/{id}', [App\Http\Controllers\EmployeController::class, 'edit'])->name('Employe.edit');
 Route::delete('/Employe/delete/{id}', [App\Http\Controllers\EmployeController::class, 'destroy'])->name('Employe.destroy');
+Route::put('/Employe/update/{id}', [App\Http\Controllers\EmployeController::class, 'update'])->name('Employe.update');
+Route::post('/Employe/store', [App\Http\Controllers\EmployeController::class, 'store'])->name('Employe.store');
 /*Route::get('/employes', 'EmployeController@index');
 Route::get('/employes/create', 'EmployeController@create');
 Route::post('/employes', 'EmployeController@store');

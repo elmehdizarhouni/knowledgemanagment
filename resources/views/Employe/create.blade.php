@@ -3,7 +3,7 @@
 @section('content')
     <h1>Ajouter un employé</h1>
 
-    <form action="{{ route('employes.store') }}" method="POST">
+    <form action="{{ route('Employe.store') }}" method="POST">
         @csrf
 
         <div class="form-group">
