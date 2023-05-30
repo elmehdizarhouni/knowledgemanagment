@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('postes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_poste')->nullable();
+            $table->string('nom_poste')->unique();
             $table->integer('salaire');
             $table->string('description_poste');
         });
