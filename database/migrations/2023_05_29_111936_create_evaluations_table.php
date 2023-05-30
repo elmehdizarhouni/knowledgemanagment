@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            
             $table->unsignedBigInteger('id_employe')->unsigned();
             $table->unsignedBigInteger('id_poste')->unsigned();
             $table->unsignedBigInteger('id_competence')->unsigned();
@@ -26,13 +25,25 @@ return new class extends Migration
             $table->foreign('id_poste')->references('id')->on('postes');
             $table->foreign('id_competence')->references('id')->on('competences');
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
-    {
+    { Schema::table("evaluations",function(Blueprint $table){
+        $table->dropForeign("id_evaluateur");
+    });
+    Schema::table("evaluations",function(Blueprint $table){
+        $table->dropForeign("id_employe");
+    });
+    Schema::table("evaluations",function(Blueprint $table){
+        $table->dropForeign("id_poste");
+    });
+    Schema::table("evaluations",function(Blueprint $table){
+        $table->dropForeign("id_competence");
+    });
         Schema::dropIfExists('evaluations');
     }
 };

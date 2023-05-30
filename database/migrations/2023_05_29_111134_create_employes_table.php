@@ -22,13 +22,16 @@ return new class extends Migration
             $table->unsignedBigInteger('id_poste')->nullable()->unsigned();
             $table->foreign('id_poste')->references('id')->on('postes');
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
-    {
+    {    Schema::table("employes",function(Blueprint $table){
+        $table->dropForeign("id_poste");
+    });
         Schema::dropIfExists('employes');
     }
 };
