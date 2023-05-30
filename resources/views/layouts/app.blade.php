@@ -13,16 +13,71 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- Custom CSS -->
+    <style>
+        .button-home {
+            text-decoration: none;
+            position: relative;
+            border: none;
+            font-size: 14px;
+            font-family: inherit;
+            color: #fff;
+            width: 9em;
+            height: 3em;
+            line-height: 2em;
+            text-align: center;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 300%;
+            border-radius: 30px;
+            z-index: 1;
+        }
+
+        .button-home:hover {
+            animation: ani 8s linear infinite;
+            border: none;
+        }
+
+        @keyframes ani {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 400%;
+            }
+        }
+
+        .button-home:before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            z-index: -1;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 400%;
+            border-radius: 35px;
+            transition: 1s;
+        }
+
+        .button-home:hover::before {
+            filter: blur(20px);
+        }
+
+        .button-home:active {
+            background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <button class="button-home">HOME</button>
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,17 +92,7 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                           
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

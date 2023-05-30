@@ -11,6 +11,12 @@ use App\Models\Competence;
 
 class EmployeController extends Controller
 {
+    protected $employes;
+
+    public function __construct()
+    {
+        $this->employes = Employe::all();
+    }
     public function index()
     {
         $employes = Employe::all();

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<head>
+@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
