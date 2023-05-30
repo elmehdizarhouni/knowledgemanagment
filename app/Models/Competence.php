@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Formation extends Model
+class Competence extends Model
 {
-    protected $fillable = ['nom_formation', 'description_formation'];
+    use HasFactory;
+
+    protected $fillable = ['nom_competence', 'type'];
 
     public function employe()
     {
         return $this->belongsTo(Employe::class);
     }
 }
+
+

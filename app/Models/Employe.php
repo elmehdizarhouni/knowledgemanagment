@@ -20,4 +20,15 @@ class Employe extends Model
         'id_poste' ,
 
     ];
+    public function formations()
+    {
+        return $this->hasMany(Formation::class);
+    }
+
+    public function competences()
+    {
+        return $this->hasMany(Competence::class);
+    }
+
+
 }
