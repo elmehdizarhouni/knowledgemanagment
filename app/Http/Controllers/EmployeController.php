@@ -25,7 +25,7 @@ class EmployeController extends Controller
     }
 
     public function create()
-    {
+    {$postes = Poste::all();
             return view('Employe.create', compact('postes'));
     }
 
@@ -58,8 +58,10 @@ class EmployeController extends Controller
     public function edit($id)
     {
         $employe = Employe::findOrFail($id);
+        $postes = Poste::all();
 
-        return view('Employe.edit', compact('employe'));
+
+        return view('Employe.edit', compact('employe','postes'));
     }
 
     public function update(Request $request, $id)
