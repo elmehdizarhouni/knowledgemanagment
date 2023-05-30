@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('employes.competences.store', $employe) }}">
+    <form method="POST" action="{{ route('competences.store', $employe) }}">
         @csrf
 
         <div class="form-group">

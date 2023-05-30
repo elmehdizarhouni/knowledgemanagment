@@ -19,10 +19,16 @@ class Employe extends Model
         'date_embauche' ,
         'id_poste' ,
 
+
     ];
+    public function poste()
+{
+    return $this->belongsTo(Poste::class, 'id_poste');
+}
+
     public function formations()
     {
-        return $this->hasMany(Formation::class);
+        return $this->hasMany(Formation::class,'employe_id');
     }
 
     public function competences()

@@ -14,7 +14,7 @@
                 <th>Email</th>
                 <th>Téléphone</th>
                 <th>Date d'embauche</th>
-                <th>Actions</th>
+                <th>Postes</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +26,7 @@
                     <td>{{ $employe->email }}</td>
                     <td>{{ $employe->telephone }}</td>
                     <td>{{ $employe->date_embauche }}</td>
+                    <td>{{ $employe->poste->nom_poste }}</td>
                     <td>
                         
                         <a href="{{ route('Employe.edit', $employe->id) }}" class="btn btn-secondary">Modifier</a>
@@ -33,6 +34,11 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">Supprimer</button>
+                        </form>
+                        <form action="{{ route('Employe.show', $employe->id) }}" method="GET" style="display: inline-block">
+                            @csrf
+
+                            <button type="submit" class="btn btn-danger" >Afficher</button>
                         </form>
                     </td>
                 </tr>

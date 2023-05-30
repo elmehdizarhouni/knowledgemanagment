@@ -9,6 +9,8 @@
         <div class="form-group">
             <label for="nom">Nom</label>
             <input type="text" name="nom" id="nom" class="form-control" required>
+        
+
         </div>
 
         <div class="form-group">
@@ -41,7 +43,8 @@
             <select name="id_poste" id="id_poste" class="form-control">
                 <option value="">Sélectionner un poste</option>
                 @foreach ($postes as $poste)
-                    <option value="{{ $poste->id }}">{{ $poste->nom }}</option>
+                    <option value="{{ $poste->id }}">{{ $poste->nom_poste }}</option>
+
                 @endforeach
             </select>
         </div>
