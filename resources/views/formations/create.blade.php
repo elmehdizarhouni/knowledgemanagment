@@ -1,18 +1,27 @@
-<!-- Formulaire de création d'une formation -->
-<h1>Créer une formation</h1>
+@extends('layouts.app')
 
-<form action="{{ route('formations.store') }}" method="POST">
-    @csrf
+@section('content')
+    <h1>Créer une formation</h1>
 
-    <div class="form-group">
-        <label for="nom_formation">Nom de la formation</label>
-        <input type="text" id="nom_formation" name="nom_formation" class="form-control">
-    </div>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <div class="form-group">
-        <label for="description_formation">Description de la formation</label>
-        <input type="text" id="description_formation" name="description_formation" class="form-control">
-    </div>
+    <form method="POST" action="{{ route('employes.formations.store', $employe) }}">
+        @csrf
 
-    <button type="submit" class="btn btn-primary">Créer</button>
-</form>
+        <div class="form-group">
+            <label for="nom_formation">Nom de la formation</label>
+            <input type="text" name="nom_formation" id="nom_formation" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="description_formation">Description de la formation</label>
+            <textarea name="description_formation" id="description_formation" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Créer</button>
+    </form>
+@endsection

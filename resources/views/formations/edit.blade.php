@@ -1,19 +1,29 @@
-<!-- Formulaire d'édition d'une formation -->
-<h1>Modifier la formation</h1>
+@extends('layouts.app')
 
-<form action="{{ route('formations.update', $formation->id) }}" method="POST">
-    @csrf
-    @method('PUT')
+@section('content')
+    <h1>Modifier la formation</h1>
 
-    <div class="form-group">
-        <label for="nom_formation">Nom de la formation</label>
-        <input type="text" id="nom_formation" name="nom_formation" class="form-control" value="{{ $formation->nom_formation }}">
-    </div>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <div class="form-group">
-        <label for="description_formation">Description de la formation</label>
-        <input type="text" id="description_formation" name="description_formation" class="form-control" value="{{ $formation->description_formation }}">
-    </div>
+    <form method="POST" action="{{ route('employes.formations.update', [$employe, $formation]) }}">
+        @csrf
+        @method('PUT')
 
-    <button type="submit" class="btn btn-primary">Modifier</button>
-</form>
+        <div class="form-group">
+            <label for="nom_formation">Nom de la formation</label>
+            <input type="text" name="nom_formation" id="nom_formation" class="form-control" value="{{ $formation->nom_formation }}">
+        </div>
+
+        <div class="form-group">
+            <label for="description_formation">Description de la formation</label>
+            <textarea name="description_formation" id="description_formation" class="form-control">{{ $formation->description_formation }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+@endsection
+
