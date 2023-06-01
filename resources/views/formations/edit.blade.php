@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('employes.formations.update', [$employe, $formation]) }}">
+    <form method="POST" action="{{ route('formations.update', [$employe, $formation]) }}">
         @csrf
         @method('PUT')
 

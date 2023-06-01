@@ -35,6 +35,10 @@ class Employe extends Model
     {
         return $this->hasMany(Competence::class);
     }
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 
 
 }

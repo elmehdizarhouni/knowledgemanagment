@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('type',['Evaluateur','Employé']);
             $table->rememberToken();
             $table->timestamps();
-            $table->enum('type',['Evaluateur','Employé']);
+            
         });
     }
 

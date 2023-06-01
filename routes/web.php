@@ -39,17 +39,14 @@ Route::delete('/Employe/delete/{id}', [App\Http\Controllers\EmployeController::c
 Route::put('/Employe/update/{id}', [App\Http\Controllers\EmployeController::class, 'update'])->name('Employe.update');
 Route::post('/Employe/store', [App\Http\Controllers\EmployeController::class, 'store'])->name('Employe.store');
 Route::get('/Employe/show/{id}', [App\Http\Controllers\EmployeController::class, 'show'])->name('Employe.show');
+Route::get('change-password', [App\Http\Controllers\EmployeController::class, 'changePassword'])->name('Employe.changePassword');
+Route::post('update-password', [App\Http\Controllers\EmployeController::class, 'updatePassword'])->name('Employe.updatePassword');
+
+
 
 Route::resource('Employe.formations', 'FormationController')->shallow();
 Route::resource('Employe.competences', 'CompetenceController')->shallow();
 
-/*Route::get('/employes', 'EmployeController@index');
-Route::get('/employes/create', 'EmployeController@create');
-Route::post('/employes', 'EmployeController@store');
-Route::get('/employes/{id}', 'EmployeController@show');
-Route::get('/employes/{id}/edit', 'EmployeController@edit');
-Route::put('/employes/{id}', 'EmployeController@update');
-Route::delete('/employes/{id}', 'EmployeController@destroy');*/
 Route::prefix('employes')->group(function () {
     // Routes pour les formations
     Route::get('{employe}/formations/create', [EmployeController::class, 'createFormation'])->name('formations.create');
@@ -67,3 +64,42 @@ Route::prefix('employes')->group(function () {
 });
 
 Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard/employee', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
+    Route::get('/dashboard/evaluator', [EvaluatorController::class, 'dashboard'])->name('evaluator.dashboard');
+});
+
+// Routes pour afficher la liste des évaluations
+Route::get(' /evaluations', 'EmployeController@index')->name('evaluations.index');
+
+// Route pour afficher le formulaire de création d'une évaluation
+Route::get('/evaluations/create', 'EmployeController@createEvaluation')->name('evaluations.create');
+
+// Route pour enregistrer une nouvelle évaluation
+Route::post('/evaluations', 'EmployeController@store')->name('evaluations.store');
+
+// Routes pour afficher les détails d'une évaluation
+Route::get('/evaluations/{evaluation}', 'EmployeController@show')->name('evaluations.show');
+
+// Route pour afficher le formulaire de modification d'une évaluation
+Route::get('/evaluations/{evaluation}/edit', 'EmployeController@edit')->name('evaluations.edit');
+
+// Route pour mettre à jour une évaluation
+Route::put('/evaluations/{evaluation}', 'EmployeController@update')->name('evaluations.update');
+
+// Route pour supprimer une évaluation
+Route::delete('/evaluations/{evaluation}', 'EmployeController@destroy')->name('evaluations.destroy');
+
+
+
+
+
+
+
+
+Route::get('/evaluations/create', 'EvaluationController@create')->name('evaluations.create');
+Route::post('/evaluations', 'EvaluationController@store')->name('evaluations.store');
+Route::get('/evaluations/{evaluation}', 'EvaluationController@show')->name('evaluations.show');
+Route::get('/evaluations/{evaluation}/edit', 'EvaluationController@edit')->name('evaluations.edit');
+Route::put('/evaluations/{evaluation}', 'EvaluationController@update')->name('evaluations.update');
+Route::delete('/evaluations/{evaluation}', 'EvaluationController@destroy')->name('evaluations.destroy');
