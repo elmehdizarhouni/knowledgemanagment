@@ -13,7 +13,7 @@
 
 .competenceContainer {
   position: absolute;
-  top: 50px;
+  top: 105px;
   right: 0;
   padding: 20px;
 }
