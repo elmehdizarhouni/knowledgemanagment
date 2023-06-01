@@ -48,13 +48,17 @@
   <div class="competenceContainer">
   <div class="cardBox">
     <div class="card">
-      <h1>Compétences :</h1>
-
-      <table class="table">
+    <h2>Compétences :</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Type</th>
+                @if (Auth::user()->hasRole('Evaluateur'))
+                    <th>Note</th>
+                    <th>Commentaire</th>
+                    <th>Actions</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -62,18 +66,33 @@
                 <tr>
                     <td>{{ $competence->nom_competence }}</td>
                     <td>{{ $competence->type }}</td>
-                    <td>
-                        <a href="{{ route('competences.edit', ['employe' => $employe, 'competence' => $competence]) }}" class="btn btn-secondary">Modifier</a>
-                        <form action="{{ route('competences.destroy', ['employe' => $employe, 'competence' => $competence]) }}" method="POST" style="display: inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')">Supprimer</button>
-                        </form>
-                    </td>
+                    @if (Auth::user()->hasRole('Evaluateur'))
+                    @if ($competence->evaluations)
+                        @foreach ($competence->evaluations as $evaluation)
+                            <td>{{ $evaluation->note }}</td>
+                            <td>{{ $evaluation->commentaire }}</td>
+                            <td>
+                                <a href="{{ route('evaluations.edit', $evaluation->id) }}" class="btn btn-secondary">Modifier</a>
+                                <form action="{{ route('evaluations.destroy', $evaluation->id) }}" method="POST" style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette évaluation ?')">Supprimer</button>
+                                </form>
+                            </td>
+                        @endforeach
+                        @endif
+                        <td>
+                            <a href="{{ route('evaluations.create', $competence->id) }}" class="btn btn-primary">Ajouter une évaluation</a>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>
-      </table>
+    </table>
+    <button onclick="window.location.href='{{ route('competences.create', $employe) }}'" class="btn btn-primary">Ajouter</button>
 
-    <a href="{{ route('competences.create', $employe) }}" class="btn btn-primary">Ajouter une compétence</a>
+
+    @if (Auth::user()->hasRole('Employé'))
+        <a href="{{ route('evaluations.index') }}" class="btn btn-primary">Voir mes évaluations</a>
+    @endif
 @endsection

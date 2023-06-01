@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Evaluation extends Model
-{
+{protected $fillable = [
+    'id_employe',
+    'id_poste',
+    'id_competence',
+    'date_evaluation',
+    'note' ,
+    'commentaire' ,
+    'id_evaluateur',
+
+];
     public function employe()
     {
         return $this->belongsTo(Employe::class, 'id_employe');

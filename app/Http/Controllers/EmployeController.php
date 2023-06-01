@@ -7,6 +7,7 @@ use App\Models\Poste;
 use App\Models\Formation;
 use App\Models\Competence;
 use App\Models\Evaluation;
+use App\Models\Evaluateur;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,7 @@ class EmployeController extends Controller
     $employe = Employe::findOrFail($id);
     $user = $employe->user;
     $competenceIds = $employe->competences->pluck('id')->toArray();
-$evaluation= Evaluation::whereIn('competence_id', $competenceIds)->get();
+$evaluation= Evaluation::whereIn('id_competence', $competenceIds)->get();
     return view('Employe.show', compact('employe','user','evaluation'));
 }
 
@@ -220,13 +221,16 @@ public function dashboard()
 }
 public function createEvaluation()
 {
-    // Afficher le formulaire de création d'une nouvelle évaluation
-    return view('evaluation.create');
+    $employes = Employe::all();
+    $postes = Poste::all();
+    $competences = Competence::all();
+    $evaluateurs = Evaluateur::all();
+    return view('evaluations.create',compact('employes', 'postes', 'competences', 'evaluateurs'));
 }
 
 public function storeEvaluation(Request $request)
 {
-    // Valider les données du formulaire
+    
     $validatedData = $request->validate([
         'id_employe' => 'required|exists:employes,id',
         'id_poste' => 'required|exists:postes,id',

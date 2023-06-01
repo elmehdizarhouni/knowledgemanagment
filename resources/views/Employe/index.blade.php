@@ -252,7 +252,7 @@
                                     </button>
                                 </form>
                                 @endif
-                                @if ($user->hasRole('Evaluateur') || $user->id === $employe->id)
+                                @if ($user->hasRole('Evaluateur') ||$employe->id === $user->employe_id)
 
                                 <form
                                     action="{{ route('Employe.show', $employe->id) }}"
