@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 class Evaluateur extends Model
 {
+   
+    protected $fillable = ['name', 'email']; // Les colonnes que vous souhaitez pouvoir remplir
 
-    public $timestamps = false;
-    use HasFactory;
+    protected $hidden = ['password']; // Les colonnes que vous souhaitez masquer lors de la récupération du modèle
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
+
+

@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('competences', function (Blueprint $table) {
-            $table->unsignedBigInteger('employe_id')->unsigned();
-            $table->foreign('employe_id')->references('id')->on('employes');
-        });
+        Schema::table('users', function (Blueprint $table) {
+        $table->unsignedBigInteger('employe_id')->nullable();
+        $table->foreign('employe_id')->references('id')->on('employes');
+    });
+        
     }
 
     /**
@@ -22,9 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('competences', function (Blueprint $table) {
-            $table->dropForeign(['employe_id']);
-            
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

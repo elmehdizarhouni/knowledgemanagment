@@ -13,7 +13,7 @@
 
 .competenceContainer {
   position: absolute;
-  top: 105px;
+  top: 50px;
   right: 0;
   padding: 20px;
 }
@@ -126,14 +126,9 @@
     <p>Téléphone : {{ $employe->telephone }}</p>
     <p>Date d'embauche : {{ $employe->date_embauche }}</p>
     <p>Poste : {{ $employe->poste->nom_poste }}</p>
-    </div>
-  </div>
-  <div class="formationContainer">
-  <div class="cardBox">
-    <div class="card">
-      <h1>Formations :</h1>
 
-      <table class="table">
+    <h2>Formations</h2>
+    <table class="table">
         <thead>
           <tr>
             <th>Nom</th>
@@ -168,37 +163,51 @@
   <div class="competenceContainer">
   <div class="cardBox">
     <div class="card">
-      <h1>Compétences :</h1>
-
-      <table class="table">
+    <h2>Compétences :</h2>
+    <table class="table">
         <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Type</th>
-            <th>Actions</th>
-          </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                @if (Auth::user()->hasRole('Evaluateur'))
+                    <th>Note</th>
+                    <th>Commentaire</th>
+                    <th>Actions</th>
+                @endif
+            </tr>
         </thead>
         <tbody>
-          @foreach ($employe->competences as $competence)
-          <tr>
-            <td>{{ $competence->nom_competence }}</td>
-            <td>{{ $competence->type }}</td>
-            <td>
-              <button onclick="window.location.href='{{ route('competences.edit', ['employe' => $employe, 'competence' => $competence]) }}'" class="btn btn-secondary">Modifier</button>
-              <form action="{{ route('competences.destroy', ['employe' => $employe, 'competence' => $competence]) }}" method="POST" style="display: inline-block">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')">Supprimer</button>
-              </form>
-            </td>
-          </tr>
-          @endforeach
+            @foreach ($employe->competences as $competence)
+                <tr>
+                    <td>{{ $competence->nom_competence }}</td>
+                    <td>{{ $competence->type }}</td>
+                    @if (Auth::user()->hasRole('Evaluateur'))
+                    @if ($competence->evaluations)
+                        @foreach ($competence->evaluations as $evaluation)
+                            <td>{{ $evaluation->note }}</td>
+                            <td>{{ $evaluation->commentaire }}</td>
+                            <td>
+                                <a href="{{ route('evaluations.edit', $evaluation->id) }}" class="btn btn-secondary">Modifier</a>
+                                <form action="{{ route('evaluations.destroy', $evaluation->id) }}" method="POST" style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette évaluation ?')">Supprimer</button>
+                                </form>
+                            </td>
+                        @endforeach
+                        @endif
+                        <td>
+                            <a href="{{ route('evaluations.create', $competence->id) }}" class="btn btn-primary">Ajouter une évaluation</a>
+                        </td>
+                    @endif
+                </tr>
+            @endforeach
         </tbody>
-      </table>
+    </table>
+    <button onclick="window.location.href='{{ route('competences.create', $employe) }}'" class="btn btn-primary">Ajouter</button>
 
-      <button onclick="window.location.href='{{ route('competences.create', $employe) }}'" class="btn btn-primary">Ajouter</button>
 
-    </div>
-  </div>
-</div>
+    @if (Auth::user()->hasRole('Employé'))
+        <a href="{{ route('evaluations.index') }}" class="btn btn-primary">Voir mes évaluations</a>
+    @endif
 @endsection

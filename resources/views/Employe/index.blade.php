@@ -203,10 +203,8 @@
                 <a href="{{ route('Employe.create') }}" style="color: White; text-decoration: none;">
                     Ajouter un employé
                 </a>
+                <a href="{{ route('Employe.changePassword') }}">Change Password</a>
             </button>
-            
-
-
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -230,7 +228,9 @@
                             <td>{{ $employe->telephone }}</td>
                             <td>{{ $employe->date_embauche }}</td>
                             <td>{{ $employe->poste->nom_poste }}</td>
+                            
                             <td>
+                            @if ($user->hasRole('Evaluateur'))
                                 <button type="button" class="styled-button">
                                     <a href="{{ route('Employe.edit', $employe->id) }}" style="color: #9400D3; text-decoration: none;">
                                         Modifier
@@ -251,6 +251,9 @@
                                         Supprimer
                                     </button>
                                 </form>
+                                @endif
+                                @if ($user->hasRole('Evaluateur') ||$employe->id === $user->employe_id)
+
                                 <form
                                     action="{{ route('Employe.show', $employe->id) }}"
                                     method="GET"
@@ -259,7 +262,9 @@
                                     @csrf
                                     <button type="submit" class="styled-button blue-button">Afficher</button>
                                 </form>
+                                @endif
                             </td>
+                           
                         </tr>
                     @endforeach
                 </tbody>
@@ -267,3 +272,4 @@
         </div>
     </body>
 @endsection
+
