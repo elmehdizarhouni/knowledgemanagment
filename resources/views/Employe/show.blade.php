@@ -4,23 +4,20 @@
 <body style="background-image: url('/backggg.jpg'); background-size: cover;">
 <style>
     .formationContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(-85%);
-  height: 100vh; /* Utilise la hauteur totale de l'écran */
+        position: absolute;
+  top: 100px;
+  left: 550px;
+  padding: 20px;
 }
 
 .competenceContainer {
   position: absolute;
-  top: 50px;
+  top: 100px;
   right: 0;
   padding: 20px;
 }
 
-
 .cardBox {
-        
   width: 400px;
   height: 500px;
   position: relative;
@@ -58,7 +55,7 @@
 }
 
 .card p {
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   line-height: 25px;
 }
 
@@ -84,11 +81,13 @@
     transform: rotate(360deg);
   }
 }
+
 .card p {
-    font-size: 1rem;
-    line-height: 15px; /* ajustez cette valeur selon vos besoins */
-  }
-  .table {
+  font-size: 1rem;
+  line-height: 15px; /* ajustez cette valeur selon vos besoins */
+}
+
+.table {
   border: 1px solid #fff;
 }
 
@@ -111,11 +110,48 @@
 .table .btn {
   border: none;
 }
+.exportBtn {
+  position: absolute;
+  top: 40px;
+  right: 750px;
+  padding: 10px 20px;
+  font-size: 16px;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    background: rgb(255, 255, 255);
+    color: blueviolet;
+    border-radius: .5rem;
+    border-bottom: 2px solid blueviolet;
+    border-right: 2px solid blueviolet;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    transition-duration: 1s;
+    transition-property: border-top, 
+        border-left, 
+        border-bottom,
+        border-right,
+        box-shadow;
+}
+.exportBtn:hover{
+    border-top: 2px solid blueviolet;
+ border-left: 2px solid blueviolet;
+ border-bottom: 2px solid rgb(238, 103, 238);
+ border-right: 2px solid rgb(238, 103, 238);
+ box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px;
+
+}
 
 </style>
-    
 
-    <div class="cardBox">
+
+<div>
+  <button class="btn btn-success exportBtn" onclick="window.location.href='{{ route('generatePDF', ['id' => $employe->id]) }}'">Export PDF</button>
+</div>
+
+
+
+
+<div class="cardBox">
   <div class="card">
     <h1>Détails de l'employé:</h1>
 
@@ -126,9 +162,14 @@
     <p>Téléphone : {{ $employe->telephone }}</p>
     <p>Date d'embauche : {{ $employe->date_embauche }}</p>
     <p>Poste : {{ $employe->poste->nom_poste }}</p>
+  </div>
+</div>
 
-    <h2>Formations</h2>
-    <table class="table">
+<div class="formationContainer">
+  <div class="cardBox">
+    <div class="card">
+      <h2>Formations :</h2>
+      <table class="table">
         <thead>
           <tr>
             <th>Nom</th>
@@ -142,7 +183,7 @@
             <td>{{ $formation->nom_formation }}</td>
             <td>{{ $formation->description_formation }}</td>
             <td>
-            <button onclick="window.location.href='{{ route('formations.edit', ['employe' => $employe, 'formation' => $formation]) }}'" class="btn btn-secondary">Modifier</button>
+              <button onclick="window.location.href='{{ route('formations.edit', ['employe' => $employe, 'formation' => $formation]) }}'" class="btn btn-secondary">Modifier</button>
               <form action="{{ route('formations.destroy', ['employe' => $employe, 'formation' => $formation]) }}" method="POST" style="display: inline-block">
                 @csrf
                 @method('DELETE')
@@ -153,61 +194,62 @@
           @endforeach
         </tbody>
       </table>
-
       <button onclick="window.location.href='{{ route('formations.create', $employe) }}'" class="btn btn-primary">Ajouter</button>
-
     </div>
   </div>
 </div>
 
-  <div class="competenceContainer">
+<div class="competenceContainer">
   <div class="cardBox">
     <div class="card">
-    <h2>Compétences :</h2>
-    <table class="table">
+      <h2>Compétences :</h2>
+      <table class="table">
         <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Type</th>
-                @if (Auth::user()->hasRole('Evaluateur'))
-                    <th>Note</th>
-                    <th>Commentaire</th>
-                    <th>Actions</th>
-                @endif
-            </tr>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            @if (Auth::user()->hasRole('Evaluateur'))
+            <th>Note</th>
+            <th>Commentaire</th>
+            <th>Actions</th>
+            @endif
+          </tr>
         </thead>
         <tbody>
-            @foreach ($employe->competences as $competence)
-                <tr>
-                    <td>{{ $competence->nom_competence }}</td>
-                    <td>{{ $competence->type }}</td>
-                    @if (Auth::user()->hasRole('Evaluateur'))
-                    @if ($competence->evaluations)
-                        @foreach ($competence->evaluations as $evaluation)
-                            <td>{{ $evaluation->note }}</td>
-                            <td>{{ $evaluation->commentaire }}</td>
-                            <td>
-                                <a href="{{ route('evaluations.edit', $evaluation->id) }}" class="btn btn-secondary">Modifier</a>
-                                <form action="{{ route('evaluations.destroy', $evaluation->id) }}" method="POST" style="display: inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette évaluation ?')">Supprimer</button>
-                                </form>
-                            </td>
-                        @endforeach
-                        @endif
-                        <td>
-                            <a href="{{ route('evaluations.create', $competence->id) }}" class="btn btn-primary">Ajouter une évaluation</a>
-                        </td>
-                    @endif
-                </tr>
+          @foreach ($employe->competences as $competence)
+          <tr>
+            <td>{{ $competence->nom_competence }}</td>
+            <td>{{ $competence->type }}</td>
+            @if (Auth::user()->hasRole('Evaluateur'))
+            @if ($competence->evaluations)
+            @foreach ($competence->evaluations as $evaluation)
+            <td>{{ $evaluation->note }}</td>
+            <td>{{ $evaluation->commentaire }}</td>
+            <td>
+              <a href="{{ route('evaluations.edit', $evaluation->id) }}" class="btn btn-secondary">Modifier</a>
+              <form action="{{ route('evaluations.destroy', $evaluation->id) }}" method="POST" style="display: inline-block">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette évaluation ?')">Supprimer</button>
+              </form>
+            </td>
             @endforeach
+            @endif
+            <td>
+              <a href="{{ route('evaluations.create', $competence->id) }}" class="btn btn-primary">Ajouter une évaluation</a>
+            </td>
+            @endif
+          </tr>
+          @endforeach
         </tbody>
-    </table>
-    <button onclick="window.location.href='{{ route('competences.create', $employe) }}'" class="btn btn-primary">Ajouter</button>
+      </table>
+      <button onclick="window.location.href='{{ route('competences.create', $employe) }}'" class="btn btn-primary">Ajouter</button>
 
+      @if (Auth::user()->hasRole('Employé'))
+      <a href="{{ route('evaluations.index') }}" class="btn btn-primary">Voir mes évaluations</a>
+      @endif
+    </div>
+  </div>
+</div>
 
-    @if (Auth::user()->hasRole('Employé'))
-        <a href="{{ route('evaluations.index') }}" class="btn btn-primary">Voir mes évaluations</a>
-    @endif
 @endsection

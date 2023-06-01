@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employe;
+
 use App\Models\Poste;
 use App\Models\Formation;
 use App\Models\Competence;
@@ -11,6 +12,8 @@ use App\Models\Evaluateur;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class EmployeController extends Controller
 {
     protected $employes;
@@ -288,6 +291,11 @@ public function destroyEvaluation(Evaluation $evaluation)
 
     // Rediriger vers la liste des évaluations
     return redirect()->route('Employe.show');
+}
+public function export_employee_pdf()
+{
+    $pdf = PDF::loadView('Employe.show');
+    return $pdf->download('show.pdf');
 }
 
 

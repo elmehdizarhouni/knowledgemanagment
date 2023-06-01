@@ -7,6 +7,11 @@ use App\Http\Controllers\CompetenceController;
 use Illuminate\Support\Facades\Auth;
 
 
+use App\Http\Controllers\PdfController;
+
+Route::get('/generate-pdf/{id}', [PdfController::class, 'generatePDF'])->name('generatePDF');
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -87,7 +92,6 @@ Route::put('/evaluations/{evaluation}', 'EmployeController@update')->name('evalu
 
 // Route pour supprimer une évaluation
 Route::delete('/evaluations/{evaluation}', 'EmployeController@destroy')->name('evaluations.destroy');
-
 
 
 
