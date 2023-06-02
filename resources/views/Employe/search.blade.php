@@ -198,7 +198,7 @@
         </style>
 
         <div class="container">
-        @include('partials.search')
+        
             <h1 style="text-align: center; color: nlack; font-weight: bold;">Liste des employés</h1>
             <button type="button" class="Btn" style="position: absolute; top: 20px; right: 20px;">
                 <a href="{{ route('Employe.create') }}" style="color: White; text-decoration: none;">

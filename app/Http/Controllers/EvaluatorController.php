@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employe;
+use App\Models\Evaluateur;
 use App\Models\Poste;
 use App\Models\Formation;
 use App\Models\Competence;
 use App\Models\User;
-
-
 class EvaluatorController extends Controller
 {
     protected $employes;
     public function index()
     {
-        $employes = Employe::all();
+        $evaluateur = Evaluateur::all();
 
-        return view('Employe.index', compact('employes'));
+        return view('Evaluateur.index', compact('evaluateur'));
     }
 
     public function create()
@@ -43,8 +42,6 @@ class EvaluatorController extends Controller
             'id_poste' => 'required',
 
         ]);
-        
-
         $employe = new Employe;
         $employe->nom = $request->nom;
         $employe->prenom = $request->prenom;

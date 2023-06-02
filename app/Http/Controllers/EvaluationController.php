@@ -1,84 +1,77 @@
 <?php
 
-/*namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Evaluation;
 use App\Models\Employe;
-use App\Models\Poste;
 use App\Models\Competence;
-use App\Models\Evaluateur;
+use App\Models\Evaluation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EvaluationController extends Controller
 {
+    public function create(Employe $employe, Competence $competence)
+    {
+        // Votre logique pour vérifier l'autorisation d'accès
 
-public function create()
-{
-    // Afficher le formulaire de création d'une nouvelle évaluation
-    return view('evaluation.create');
+        return view('Evaluations.create', compact('employe', 'competence'));
+    }
+
+    public function store(Request $request, Employe $employe, Competence $competence)
+    {
+        // Valider les données du formulaire
+        $validatedData = $request->validate([
+            'note' => 'required',
+            'commentaire' => 'required',
+        ]);
+
+        // Créer une nouvelle évaluation
+        $evaluation = new Evaluation;
+        $evaluation->note = $request->note;
+        $evaluation->commentaire = $request->commentaire;
+        $evaluation->id_employe = $employe->id;
+        $evaluation->competence_id = $competence->id;
+        // Assurez-vous d'ajuster l'ID de l'évaluateur en fonction de votre logique d'authentification
+        $evaluation->evaluateur_id = Auth::user()->id;
+        $evaluation->save();
+
+        // Rediriger vers la page de détails de l'employé avec un message de succès
+        return redirect()->route('Employe.show', $employe)->with('success', 'Évaluation ajoutée avec succès.');
+    }
+
+    public function edit(Employe $employe, Competence $competence, Evaluation $evaluation)
+    {
+        // Votre logique pour vérifier l'autorisation d'accès
+
+        return view('Evaluations.edit', compact('employe', 'competence', 'evaluation'));
+    }
+
+    public function update(Request $request, Employe $employe, Competence $competence, Evaluation $evaluation)
+    {
+        // Valider les données du formulaire
+        $validatedData = $request->validate([
+            'note' => 'required',
+            'commentaire' => 'required',
+            
+        ]);
+
+        // Mettre à jour les informations de l'évaluation
+        $evaluation->note = $request->note;
+        $evaluation->commentaire = $request->commentaire;
+        $evaluation->save();
+
+        // Rediriger vers la page de détails de l'employé avec un message de succès
+        return redirect()->route('Employe.show', $employe)->with('success', 'Évaluation mise à jour avec succès.');
+    }
+
+    public function destroy(Employe $employe, Competence $competence, Evaluation $evaluation)
+    {
+        // Votre logique pour vérifier l'autorisation d'accès
+
+        // Supprimer l'évaluation
+        $evaluation->delete();
+
+        // Rediriger vers la page de détails de l'employé avec un message de succès
+        return redirect()->route('Employe.show', $employe)->with('success', 'Évaluation supprimée avec succès.');
+    }
 }
-
-public function store(Request $request)
-{
-    // Valider les données du formulaire
-    $validatedData = $request->validate([
-        'id_employe' => 'required|exists:employes,id',
-        'id_poste' => 'required|exists:postes,id',
-        'id_competence' => 'required|exists:competences,id',
-        'date_evaluation' => 'required|date',
-        'note' => 'required|integer',
-        'commentaire' => 'required|string',
-        'id_evaluateur' => 'required|exists:evaluateurs,id',
-    ]);
-
-    // Créer une nouvelle évaluation avec les données validées
-    $evaluation = Evaluation::create($validatedData);
-
-    // Rediriger vers la page de détails de l'évaluation créée
-    return redirect()->route('evaluations.show', $evaluation);
-}
-
-
-public function show(Evaluation $evaluation)
-{
-    // Afficher les détails de l'évaluation
-    return view('evaluation.show', compact('evaluation'));
-}
-
-
-public function edit(Evaluation $evaluation)
-{
-    // Afficher le formulaire de modification de l'évaluation
-    return view('evaluation.edit', compact('evaluation'));
-}
-
-public function update(Request $request, Evaluation $evaluation)
-{
-    // Valider les données du formulaire
-    $validatedData = $request->validate([
-        'id_employe' => 'required|exists:employes,id',
-        'id_poste' => 'required|exists:postes,id',
-        'id_competence' => 'required|exists:competences,id',
-        'date_evaluation' => 'required|date',
-        'note' => 'required|integer',
-        'commentaire' => 'required|string',
-        'id_evaluateur' => 'required|exists:evaluateurs,id',
-    ]);
-
-    // Mettre à jour l'évaluation avec les données validées
-    $evaluation->update($validatedData);
-
-    // Rediriger vers la page de détails de l'évaluation modifiée
-    return redirect()->route('evaluations.show', $evaluation);
-}
-public function destroy(Evaluation $evaluation)
-{
-    // Supprimer l'évaluation
-    $evaluation->delete();
-
-    // Rediriger vers la liste des évaluations
-    return redirect()->route('evaluations.index');
-}
-
-}
-*/

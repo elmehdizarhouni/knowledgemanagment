@@ -5,18 +5,6 @@ use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\CompetenceController;
 use Illuminate\Support\Facades\Auth;
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,7 +16,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -41,11 +28,12 @@ Route::post('/Employe/store', [App\Http\Controllers\EmployeController::class, 's
 Route::get('/Employe/show/{id}', [App\Http\Controllers\EmployeController::class, 'show'])->name('Employe.show');
 Route::get('change-password', [App\Http\Controllers\EmployeController::class, 'changePassword'])->name('Employe.changePassword');
 Route::post('update-password', [App\Http\Controllers\EmployeController::class, 'updatePassword'])->name('Employe.updatePassword');
-
-
-
+Route::get('/postes', [App\Http\Controllers\PosteController::class, 'index'])->name('postes.index');
+Route::get('/search', [App\Http\Controllers\EmployeController::class, 'search'])->name('employes.search');
+Route::get('/evaluateurs', [App\Http\Controllers\EvaluatorController::class, 'index'])->name('evaluateurs.index');
 Route::resource('Employe.formations', 'FormationController')->shallow();
 Route::resource('Employe.competences', 'CompetenceController')->shallow();
+Route::resource('Employe.evaluations', 'EvaluationController')->shallow();
 
 Route::prefix('employes')->group(function () {
     // Routes pour les formations
@@ -61,40 +49,22 @@ Route::prefix('employes')->group(function () {
     Route::get('{employe}/competences/{competence}/edit', [App\Http\Controllers\EmployeController::class, 'editCompetence'])->name('competences.edit');
     Route::put('{employe}/competences/{competence}', [App\Http\Controllers\EmployeController::class, 'updateCompetence'])->name('competences.update');
     Route::delete('{employe}/competences/{competence}', [App\Http\Controllers\EmployeController::class, 'destroyCompetence'])->name('competences.destroy');
-});
 
+
+});
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/employee', [App\Http\Controllers\EmployeeController::class, 'dashboard'])->name('employee.dashboard');
     Route::get('/dashboard/evaluator', [App\Http\Controllers\EvaluatorController::class, 'dashboard'])->name('evaluator.dashboard');
 });
-Route::get('/evaluations/create', [App\Http\Controllers\EmployeController::class, 'createEvaluation'])->name('evaluations.create');
-Route::post('/evaluations/create', [App\Http\Controllers\EmployeController::class, 'storeEvaluation'])->name('evaluations.store');
 
-// Routes pour afficher la liste des évaluations
-
-Route::get(' /evaluations', 'EmployeController@show')->name('evaluations.index');
-
-// Route pour afficher le formulaire de création d'une évaluation
-// Routes pour afficher les détails d'une évaluation
-Route::get('/evaluations/{evaluation}', 'EmployeController@show')->name('evaluations.show');
-
-// Route pour afficher le formulaire de modification d'une évaluation
-Route::get('/evaluations/{evaluation}/edit', 'EmployeController@edit')->name('evaluations.edit');
-
-// Route pour mettre à jour une évaluation
-Route::put('/evaluations/{evaluation}', 'EmployeController@update')->name('evaluations.update');
-
-// Route pour supprimer une évaluation
-Route::delete('/evaluations/{evaluation}', 'EmployeController@destroy')->name('evaluations.destroy');
-
-
-
-
-
+Route::get('/employes/{employe}/competences/{competence}/evaluations/create',[App\Http\Controllers\EvaluationController::class, 'create'])->name('evaluations.create');
+Route::post('/employes/{employe}/competences/{competence}/evaluations',[App\Http\Controllers\EvaluationController::class, 'store'])->name('evaluations.store');
+Route::get('/employes/{employe}/competences/{competence}/evaluations/{evaluation}/edit',[App\Http\Controllers\EvaluationController::class, 'edit'])->name('evaluations.edit');
+Route::put('/employes/{employe}/competences/{competence}/evaluations/{evaluation}',[App\Http\Controllers\EvaluationController::class, 'update'])->name('evaluations.update');
+Route::delete('/employes/{employe}/competences/{competence}/evaluations/{evaluation}',[App\Http\Controllers\EvaluationController::class, 'destroy'])->name('evaluations.destroy');
 
 /*
-
 Route::get('/evaluations/create', 'EvaluationController@create')->name('evaluations.create');
 Route::post('/evaluations', 'EvaluationController@store')->name('evaluations.store');
 Route::get('/evaluations/{evaluation}', 'EvaluationController@show')->name('evaluations.show');

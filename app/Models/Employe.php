@@ -39,6 +39,10 @@ class Employe extends Model
     {
         return $this->hasOne(User::class);
     }
-
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
+    
 
 }

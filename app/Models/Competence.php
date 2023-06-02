@@ -15,6 +15,11 @@ class Competence extends Model
     {
         return $this->belongsTo(Employe::class);
     }
+    public function evaluations()
+{
+    return $this->hasMany(Evaluation::class);
+}
+
 }
 
 

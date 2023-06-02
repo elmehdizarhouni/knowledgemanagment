@@ -3,20 +3,22 @@
 @section('content')
     <h1>Modifier l'évaluation</h1>
 
-    <form action="{{ route('evaluations.update', $evaluation) }}" method="POST">
+    <form action="{{ route('evaluations.update', ['employe' => $employe, 'competence' => $competence, 'evaluation' => $evaluation]) }}" method="POST">
         @csrf
         @method('PUT')
 
-        <!-- Champs du formulaire pré-remplis avec les valeurs de l'évaluation -->
         <div class="form-group">
-            <label for="id_employe">Employé</label>
-            <select class="form-control" name="id_employe">
-                <!-- Options pour la sélection de l'employé avec la valeur de l'évaluation pré-sélectionnée -->
-            </select>
+            <label for="note">Note :</label>
+            <input type="text" name="note" id="note" class="form-control" value="{{ $evaluation->note }}" required>
         </div>
 
-        <!-- Autres champs du formulaire pré-remplis avec les valeurs de l'évaluation -->
+        <div class="form-group">
+            <label for="commentaire">Commentaire :</label>
+            <textarea name="commentaire" id="commentaire" class="form-control" required>{{ $evaluation->commentaire }}</textarea>
+        </div>
+       
 
         <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
 @endsection
+

@@ -13,16 +13,14 @@ return new class extends Migration
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_employe')->unsigned();
-            $table->unsignedBigInteger('id_poste')->unsigned();
-            $table->unsignedBigInteger('id_competence')->unsigned();
-            $table->date('date_evaluation');
+            $table->unsignedBigInteger('competence_id')->unsigned();
+           
             $table->integer('note');
             $table->string('commentaire');
-            $table->unsignedBigInteger('id_evaluateur')->unsigned();
-            $table->foreign('id_evaluateur')->references('id')->on('evaluateurs');
+            $table->unsignedBigInteger('evaluateur_id')->unsigned();
+            $table->foreign('evaluateur_id')->references('id')->on('evaluateurs');
             $table->foreign('id_employe')->references('id')->on('employes');
-            $table->foreign('id_poste')->references('id')->on('postes');
-            $table->foreign('id_competence')->references('id')->on('competences');
+            $table->foreign('competence_id')->references('id')->on('competences')->onDelete('cascade');;
         });
         Schema::enableForeignKeyConstraints();
     }
@@ -32,16 +30,14 @@ return new class extends Migration
      */
     public function down(): void
     { Schema::table("evaluations",function(Blueprint $table){
-        $table->dropForeign("id_evaluateur");
+        $table->dropForeign("evaluateur_id");
     });
     Schema::table("evaluations",function(Blueprint $table){
         $table->dropForeign("id_employe");
     });
+ 
     Schema::table("evaluations",function(Blueprint $table){
-        $table->dropForeign("id_poste");
-    });
-    Schema::table("evaluations",function(Blueprint $table){
-        $table->dropForeign("id_competence");
+        $table->dropForeign("competence_id");
     });
         Schema::dropIfExists('evaluations');
     }
