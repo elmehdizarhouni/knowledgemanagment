@@ -292,11 +292,7 @@ public function destroyEvaluation(Evaluation $evaluation)
     // Rediriger vers la liste des évaluations
     return redirect()->route('Employe.show');
 }
-public function export_employee_pdf()
-{
-    $pdf = PDF::loadView('Employe.show');
-    return $pdf->download('show.pdf');
-}
+
 
 
 }
