@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Evaluation extends Model
 {protected $fillable = [
     'id_employe',
-    'id_poste',
-    'id_competence',
-    'date_evaluation',
+    'competence_id',
+    
     'note' ,
     'commentaire' ,
-    'id_evaluateur',
+    'evaluateur_id',
 
 ];
     public function employe()
@@ -28,12 +27,12 @@ class Evaluation extends Model
     
     public function competence()
     {
-        return $this->belongsTo(Competence::class, 'id_competence');
+        return $this->belongsTo(Competence::class, 'competence_id');
     }
     
     public function evaluateur()
     {
-        return $this->belongsTo(Evaluateur::class, 'id_evaluateur');
+        return $this->belongsTo(Evaluateur::class, 'evaluateur_id');
     }
     
     public $timestamps = false;

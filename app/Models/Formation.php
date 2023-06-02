@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Formation extends Model
 {public $timestamps = false;
-    protected $fillable = ['nom_formation', 'description_formation'];
+    protected $fillable = ['nom_formation', 'description_formation','employe_id'];
 
     public function employe()
     {
