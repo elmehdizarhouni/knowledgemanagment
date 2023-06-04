@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.log')
 
 @section('content')
 <body style="background-image: url('/back.jpg'); background-size: cover;">
@@ -108,7 +108,7 @@ footer {
         text-align: center;
         padding: 20px;
         font-size: 14px;
-        margin-top: 170px;
+        margin-top: 190px;
     }
 </style>
 

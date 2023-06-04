@@ -111,7 +111,7 @@
     
 </style>
 
-<body style="background-image: url('/backggg.jpg'); background-size: cover;">
+<body style="background-image: url('/beige.jpg'); background-size: cover;">
 
 <div class="card">
     <h2>Modifier la compétence :<!-- Ajout du titre -->

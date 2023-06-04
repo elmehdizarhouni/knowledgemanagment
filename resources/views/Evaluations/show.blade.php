@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<body style="background-image: url('/beige.jpg'); background-size: cover;">
     <h1>Détails de l'évaluation</h1>
 
     <p>ID : {{ $evaluation->id }}</p>

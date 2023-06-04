@@ -4,7 +4,13 @@
 <head>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+<style>
 
+body {
+        background-image: url('{{ asset('beige.jpg') }}');
+        background-size: cover;
+    }
+    </style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

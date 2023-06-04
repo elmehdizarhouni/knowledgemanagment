@@ -163,7 +163,7 @@ public function destroyFormation(Employe $employe, Formation $formation)
 
 public function createCompetence(Employe $employe)
 {
-    return view('competences.create', compact('employe','competence'));
+    return view('competences.create', compact('employe'));
 }
 
 public function storeCompetence(Request $request, Employe $employe)
@@ -283,20 +283,21 @@ public function storeEvaluation(Request $request,Employe $employe)
 
 }*/
 
-public function storeEvaluation(Request $request,Employe $employe,Competence $competence)
+public function storeEvaluation(Request $request, Employe $employe, Competence $competence)
 {
     $evaluateur_id = auth()->user()->getAuthIdentifierName();
     $evaluation = Evaluation::create([
-        $id_employe = $request->input('id_employe'),
-        $competence_id = $request->input('competence_id'),
-        $evaluateur_id = $request->input('evaluateur_id'),
-        $date_evaluation = $request->input('date_evaluation'),
-        $note = $request->input('note'),
-        $commentaire = $request->input('commentaire')
+        'id_employe' => $request->input('id_employe'),
+        'competence_id' => $request->input('competence_id'),
+        'evaluateur_id' => $request->input('evaluateur_id'),
+        'date_evaluation' => $request->input('date_evaluation'),
+        'note' => $request->input('note'),
+        'commentaire' => $request->input('commentaire')
     ]);
     
-    return redirect()->route('Employe.show', 'employe');
+    return redirect()->route('Employe.show', ['employe' => $employe->id]);
 }
+
     // Créer un tableau d'attributs pour l'évaluation
     /*$attributes = [
         'id_employe' => $employe,

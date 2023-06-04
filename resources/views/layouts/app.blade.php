@@ -15,24 +15,44 @@
 
     <!-- Custom CSS -->
     <style>
-        .button-home {
+        .button-home,
+        .username-button,
+        .logout-button {
             text-decoration: none;
-            position: relative;
-            border: none;
-            font-size: 14px;
-            font-family: inherit;
-            color: #fff;
+            position: fixed;
+            top: 5px;
             width: 9em;
             height: 3em;
             line-height: 2em;
             text-align: center;
-            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            border: none;
+            font-size: 14px;
+            font-family: inherit;
+            color: #fff;
+            background: linear-gradient(90deg, #964B00, #F5DEB3);
             background-size: 300%;
             border-radius: 30px;
             z-index: 1;
         }
 
-        .button-home:hover {
+        .button-home {
+            left: 0;
+        }
+
+        .username-button {
+            right: 10%;
+            transform: translateX(10%);
+        }
+
+        .logout-button {
+            right: 0;
+            width: 9em; /* Ajouter cette propriété pour fixer la largeur */
+            height: 3.5em; /* Ajouter cette propriété pour fixer la hauteur */
+        }
+
+        .button-home:hover,
+        .username-button:hover,
+        .logout-button:hover {
             animation: ani 8s linear infinite;
             border: none;
         }
@@ -46,8 +66,9 @@
                 background-position: 400%;
             }
         }
-
-        .button-home:before {
+        
+        .button-home:before,
+        .username-button:before {
             content: '';
             position: absolute;
             top: -5px;
@@ -55,18 +76,30 @@
             right: -5px;
             bottom: -5px;
             z-index: -1;
-            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background: linear-gradient(90deg, #964B00, #F5DEB3);
             background-size: 400%;
             border-radius: 35px;
             transition: 1s;
         }
-
-        .button-home:hover::before {
+        .logout-button::before,
+        .button-home:hover::before,
+        .username-button:hover::before {
             filter: blur(20px);
         }
 
-        .button-home:active {
-            background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+        .button-home:active,
+        .username-button:active,
+        .logout-button:active {
+            background: linear-gradient(32deg, #964B00, #F5DEB3);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand a {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -74,45 +107,31 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <button class="button-home">HOME</button>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
+                <div class="navbar-brand">
+                    <div>
+                        <a href="{{ url('/') }}">
+                            <button class="button-home">Home</button>
+                        </a>
+                    </div>
+                    <div class="username-button">
                         @guest
-                           
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                            <a id="navbarDropdown" href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <button class="button-home">{{ Auth::user()->name }}</button>
+                            </a>
                         @endguest
-                    </ul>
+                    </div>
+                    <div class="logout-button">
+                        @guest
+                        @else
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <button class="logout-button">Log out</button>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        @endguest
+                    </div>
                 </div>
             </div>
         </nav>

@@ -5,26 +5,11 @@ use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\CompetenceController;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-=======
 
 
-use App\Http\Controllers\PdfController;
 
-Route::get('/generate-pdf/{id}', [PdfController::class, 'generatePDF'])->name('generatePDF');
+Route::get('/generatePDF/{id}', [App\Http\Controllers\PdfController::class, 'generatePDF'])->name('generatePDF');
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
->>>>>>> 6025f4eabe0984115a0673862bf60cd06bc8d01c
 Route::get('/', function () {
     return view('welcome');
 });
@@ -78,15 +63,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/evaluator', [App\Http\Controllers\EvaluatorController::class, 'dashboard'])->name('evaluator.dashboard');
 });
 
-<<<<<<< HEAD
 Route::get('/employes/{employe}/competences/{competence}/evaluations/create',[App\Http\Controllers\EvaluationController::class, 'create'])->name('evaluations.create');
 Route::post('/employes/{employe}/competences/{competence}/evaluations',[App\Http\Controllers\EvaluationController::class, 'store'])->name('evaluations.store');
 Route::get('/employes/{employe}/competences/{competence}/evaluations/{evaluation}/edit',[App\Http\Controllers\EvaluationController::class, 'edit'])->name('evaluations.edit');
 Route::put('/employes/{employe}/competences/{competence}/evaluations/{evaluation}',[App\Http\Controllers\EvaluationController::class, 'update'])->name('evaluations.update');
 Route::delete('/employes/{employe}/competences/{competence}/evaluations/{evaluation}',[App\Http\Controllers\EvaluationController::class, 'destroy'])->name('evaluations.destroy');
 
-=======
->>>>>>> 6025f4eabe0984115a0673862bf60cd06bc8d01c
 /*
 Route::get('/evaluations/create', 'EvaluationController@create')->name('evaluations.create');
 Route::post('/evaluations', 'EvaluationController@store')->name('evaluations.store');

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<body style="background-image: url('/backggg.jpg'); background-size: cover;">
+<body style="background-image: url('/beige.jpg'); background-size: cover;">
     
-        <style>
+<style>
             .container {
                 margin-top: 20px;
             }
@@ -18,23 +18,39 @@
                 margin-right: 5px;
             }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
+           
+            .table {
+  background-color:#F6F0E9;
+  width: 86%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-left: 120px
+}
 
-            .table th,
-            .table td {
-                border: 1px solid black;
-                padding: 8px;
-                text-align: center;
-                color: black;
-                font-weight: bold;
-            }
+.table th, .table td {
+  padding: 5px;
+  text-align: left;
+  
+}
 
-            .table td {
-                vertical-align: middle;
-            }
+.table th {
+  text-decoration: underline;
+  background-color:#5CA8A6;
+  color: @header_text_color;
+}
+.table tbody tr:nth-child(even) {
+  background-color: #8CCDCB;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #7fbab3;
+}
+.table th:not(:first-child),
+    .table td:not(:first-child) {
+        border-left: 1px solid #7fbab3;
+    }
+
+
 
             .add-employee-btn {
                 position: absolute;
@@ -197,15 +213,11 @@
 
         </style>
 
+
         <div class="container">
         
             <h1 style="text-align: center; color: nlack; font-weight: bold;">Liste des employés</h1>
-            <button type="button" class="Btn" style="position: absolute; top: 20px; right: 20px;">
-                <a href="{{ route('Employe.create') }}" style="color: White; text-decoration: none;">
-                    Ajouter un employé
-                </a>
-                <a href="{{ route('Employe.changePassword') }}">Change Password</a>
-            </button>
+            
             <table class="table table-striped">
                 <thead>
                     <tr>

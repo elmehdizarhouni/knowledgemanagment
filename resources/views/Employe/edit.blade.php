@@ -2,173 +2,155 @@
 
 @section('content')
 <style>
-    .card {
-        width: 500px;
-        height: 500px;
-        background: #07182E;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        place-content: center;
-        place-items: center;
-        overflow: hidden;
-        border-radius: 20px;
-        padding-left: 20px;
-    }
-
-    .card h2 {
-        z-index: 1;
-        color: white;
-        font-size: 2em;
-        margin-bottom: 20px; /* Espace en bas */
-    }
-
-    .card::before {
-        content: '';
-        position: absolute;
-        width: 100px;
-        background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
-        height: 130%;
-        animation: rotBGimg 3s linear infinite;
-        transition: all 0.2s linear;
-    }
-
-    @keyframes rotBGimg {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    .card::after {
-        content: '';
-        position: absolute;
-        background: #07182E;
-        inset: 5px;
-        border-radius: 15px;
-    }  
-    button {
-        --glow-color: rgb(217, 176, 255);
-        --glow-spread-color: rgba(191, 123, 255, 0.781);
-        --enhanced-glow-color: rgb(231, 206, 255);
-        --btn-color: rgb(100, 61, 136);
-        border: .25em solid var(--glow-color);
-        padding: 1em 3em;
-        color: var(--glow-color);
-        font-size: 15px;
-        font-weight: bold;
-        background-color: var(--btn-color);
-        border-radius: 1em;
-        outline: none;
-        box-shadow: 0 0 1em .25em var(--glow-color),
-            0 0 4em 1em var(--glow-spread-color),
-            inset 0 0 .75em .25em var(--glow-color);
-        text-shadow: 0 0 .5em var(--glow-color);
-        position: relative;
-        transition: all 0.3s;
+    .container {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px
+        height: 30vh; /* Ajustez la hauteur selon vos besoins */
+    }
+    .card {
+        position: relative ;
+  width: 90%;
+  height: 90%;
+  background: #7fbab3;
+  border-radius: 20px;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: #ffffff;
+  overflow: hidden;
+  padding: 20px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.5) 0px 18px 36px -18px inset;
+    font-weight: bold
+    }
+    .cardBox {
+        width: 400px;
+  height: 600px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
+    rgba(0, 0, 0, 0.5) 0px 2px 25px 0px;
+}
+.cardBox::before {
+    content: "";
+  position: absolute;
+  width: 40%;
+  height: 150%;
+  background: #7fbab3;
+  background: -webkit-linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);
+  background: linear-gradient(to right, #000000, #000000, #838E42);
+  animation: glowing01 5s linear infinite;
+  transform-origin: center;
+  animation: glowing 5s linear infinite;
+}
+
+@keyframes glowing {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+    .card h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
     }
 
-    button::after {
-        pointer-events: none;
-        content: "";
-        position: absolute;
-        top: 120%;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: var(--glow-spread-color);
-        filter: blur(2em);
-        opacity: .7;
-        transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+    .card p {
+        font-size: 2.5rem;
+        line-height: 25px;
     }
 
-    button:hover {
-        color: var(--btn-color);
-        background-color: var(--glow-color);
-        box-shadow: 0 0 1em .25em var(--glow-color),
-            0 0 4em 2em var(--glow-spread-color),
-            inset 0 0 .75em .25em var(--glow-color);
+    .card p {
+        font-size: 1rem;
+        line-height: 15px; /* ajustez cette valeur selon vos besoins */
     }
 
-    button:active {
-        box-shadow: 0 0 0.6em .25em var(--glow-color),
-            0 0 2.5em 2em var(--glow-spread-color),
-            inset 0 0 .5em .25em var(--glow-color);
-    }
     
+
+
 </style>
 
-<body style="background-image: url('/backggg.jpg'); background-size: cover;">
-
-    <div class="card">
+<body style="background-image: url('/beige.jpg'); background-size: cover;">
+<div class="container">
+    <div class="cardBox">
+     <div class="card">
+        
         <h2>
-
-        @if(session('success'))
+            @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
-        @endif
+            @endif
 
-        <form method="POST" action="{{ route('Employe.update', $employe) }}">
-            @csrf
-            @method('PUT')
+            <form method="POST" action="{{ route('Employe.update', $employe) }}">
+                @csrf
+                @method('PUT')
 
-            <div class="form-group">
-                <label for="nom">Nom :</label>
-                <input type="text" name="nom" id="nom" class="form-control" value="{{ $employe->nom }}">
-            </div>
+                <div class="form-group">
+                    <label for="nom">Nom :</label>
+                    <input type="text" name="nom" id="nom" class="form-control" value="{{ $employe->nom }}">
+                </div>
 
-            <div class="form-group">
-                <label for="prenom">Prénom :</label>
-                <input type="text" name="prenom" id="prenom" class="form-control" value="{{ $employe->prenom }}">
-            </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" name="prenom" id="prenom" class="form-control"
+                        value="{{ $employe->prenom }}">
+                </div>
 
-            <div class="form-group">
-                <label for="adresse">Adresse :</label>
-                <input type="text" name="adresse" id="adresse" class="form-control" value="{{ $employe->adresse }}">
-            </div>
+                <div class="form-group">
+                    <label for="adresse">Adresse :</label>
+                    <input type="text" name="adresse" id="adresse" class="form-control"
+                        value="{{ $employe->adresse }}">
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email :</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{ $employe->email }}">
-            </div>
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" name="email" id="email" class="form-control" value="{{ $employe->email }}">
+                </div>
 
-            <div class="form-group">
-                <label for="telephone">Téléphone :</label>
-                <input type="text" name="telephone" id="telephone" class="form-control" value="{{ $employe->telephone }}">
-            </div>
+                <div class="form-group">
+                    <label for="telephone">Téléphone :</label>
+                    <input type="text" name="telephone" id="telephone" class="form-control"
+                        value="{{ $employe->telephone }}">
+                </div>
 
-            <div class="form-group">
-                <label for="date_embauche">Date d'embauche :</label>
-                <input type="date" name="date_embauche" id="date_embauche" class="form-control" value="{{ $employe->date_embauche }}">
-            </div>
+                <div class="form-group">
+                    <label for="date_embauche">Date d'embauche :</label>
+                    <input type="date" name="date_embauche" id="date_embauche" class="form-control"
+                        value="{{ $employe->date_embauche }}">
+                </div>
 
-            <div class="form-group">
-                <label for="id_poste">Poste :</label>
-                <select name="id_poste" id="id_poste" class="form-control">
-                    <option value="">Sélectionner un poste</option>
-                    @foreach($postes as $poste)
-                        <option value="{{ $poste->id }}" {{ $poste->id === $employe->id_poste ? 'selected' : '' }}>
+                <div class="form-group">
+                    <label for="id_poste">Poste :</label>
+                    <select name="id_poste" id="id_poste" class="form-control">
+                        <option value="">Sélectionner un poste</option>
+                        @foreach($postes as $poste)
+                        <option value="{{ $poste->id }}"
+                            {{ $poste->id === $employe->id_poste ? 'selected' : '' }}>
                             {{ $poste->nom_poste }}
                         </option>
-                    @endforeach
-                </select>
-            </div>
+                        @endforeach
+                    </select>
+                </div>
 
-            <button type="submit" class="button">Modifier</button>
-        </form>
+                <button type="submit" class="button">Modifier</button>
+            </form>
         </h2>
-    </div>
+     </div>
+ </div>
+</div>
 </body>
 @endsection
