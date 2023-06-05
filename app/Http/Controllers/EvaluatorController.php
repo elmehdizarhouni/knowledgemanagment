@@ -100,8 +100,8 @@ class EvaluatorController extends Controller
 
 public function dashboard()
 {
-    $employees = Employe::all();
-    return view('evaluator.dashboard', compact('employees'));
+    $evaluateur = Evaluateur::all();
+    return view('Evaluateur.index', compact('evaluateur'));
 }
 
 }

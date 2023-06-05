@@ -30,7 +30,7 @@
 .table th, .table td {
   padding: 5px;
   text-align: left;
-  
+  word-wrap: break-word;
 }
 
 .table th {
@@ -143,7 +143,7 @@ button.styled-button.add-employee-button:hover:before {
 
         <div class="container">
         @include('partials.search')
-            <h1 style="text-align: center; color: nlack; font-weight: bold;">Liste des employés</h1>
+            <h1 style="text-align: center; color: black; font-weight: bold;">Liste des employés</h1>
             @if ($user->hasRole('Evaluateur') )
             <button type="button" class="styled-button add-employee-button" style="position: absolute; top: 115px; right: 1250px;">
                 <a href="{{ route('Employe.create') }}" style="color: White; text-decoration: none;">

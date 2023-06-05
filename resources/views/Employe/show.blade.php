@@ -241,9 +241,9 @@
             <th>Type</th>
             <th>Note</th>
             <th>Commentaire </th>
-            @if (Auth::user()->hasRole('Employé'))
+            
             <th>Actions</th>
-           @endif
+          
         </tr>
     </thead>
     <tbody>
@@ -267,6 +267,18 @@
                 @endforeach
             </td>
             <td>
+              
+            @if (Auth::user()->hasRole('Employé'))
+               <button onclick="window.location.href='{{ route('competences.edit', ['employe' => $employe->id, 'competence' => $competence->id]) }}'" class="btn btn-secondary">Modifier</button>
+                        <form action="{{ route('competences.destroy', ['employe' => $employe, 'competence' => $competence]) }}" method="POST" style="display: inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette competence ?')">Supprimer</button>
+                        </form>
+                    
+                    @endif
+
+
               
                 @if (Auth::user()->hasRole('Evaluateur'))
                     @php

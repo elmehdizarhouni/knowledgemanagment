@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <body style="background-image: url('/beige.jpg'); background-size: cover;">
 
     <!-- Custom CSS -->
     <style>
@@ -101,15 +102,18 @@
         .navbar-brand a {
             margin-right: 10px;
         }
+        .bg-beige {
+        background-color: #ede3da    !important;
+    }
     </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-beige shadow-sm">
             <div class="container">
                 <div class="navbar-brand">
                     <div>
-                        <a href="{{ route('home' )}}">
+                    <a href="{{ route('home') }}">
                             <button class="button-home">Home</button>
                         </a>
                     </div>

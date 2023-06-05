@@ -181,7 +181,7 @@ public function storeCompetence(Request $request, Employe $employe)
 
 public function editCompetence(Employe $employe, Competence $competence)
 {
-    return view('competences.edit', compact('employe'));
+    return view('competences.edit', compact('employe','competence'));
 }
 
 public function updateCompetence(Request $request, Employe $employe, Competence $competence)

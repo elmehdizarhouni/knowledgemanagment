@@ -109,7 +109,7 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Créer</button>
+        <button type="submit" class="btn btn-primary">Créer la competence</button>
     </form>
     </h2>
     </div>
