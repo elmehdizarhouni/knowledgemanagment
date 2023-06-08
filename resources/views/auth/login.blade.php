@@ -153,7 +153,7 @@ footer {
     </div>
 </div>
 <footer>
-    Tous droits réservés &copy; 2023 VotreNomDeSite.com
+    Tous droits réservés &copy; 2023
 </footer>
 </body>
 @endsection
